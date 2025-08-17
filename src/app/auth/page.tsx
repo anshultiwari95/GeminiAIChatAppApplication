@@ -1,63 +1,44 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import useStore from '@/store';
-import { Moon, Sun, Loader2, Sparkles } from 'lucide-react';
+import AuthContainer from '@/components/auth/AuthContainer';
+import { Loader2, Sun, Moon, Sparkles } from 'lucide-react';
 
-export default function Home() {
+export default function AuthPage() {
   const { isAuthenticated, isDarkMode, toggleDarkMode } = useStore();
-  const [mounted, setMounted] = useState(false);
-  const [hydrated, setHydrated] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
-    setMounted(true);
-    // Wait for store hydration
-    const timer = setTimeout(() => {
-      setHydrated(true);
-    }, 100);
-    return () => clearTimeout(timer);
-  }, []);
-
-  // Handle authentication state changes with proper routing
-  useEffect(() => {
-    if (hydrated) {
-      if (isAuthenticated) {
-        // User is authenticated, redirect to dashboard
-        router.push('/dashboard');
-      } else {
-        // User is not authenticated, redirect to auth
-        router.push('/auth');
-      }
+    // Redirect to dashboard if already authenticated
+    if (isAuthenticated) {
+      router.push('/dashboard');
     }
-  }, [isAuthenticated, hydrated, router]);
+  }, [isAuthenticated, router]);
 
-  if (!mounted || !hydrated) {
+  // Show loading while checking authentication
+  if (isAuthenticated) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 flex items-center justify-center">
         <div className="text-center fade-in">
-          <div className="relative mb-6">
-            <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center mx-auto pulse-glow">
-              <Sparkles className="w-8 h-8 text-white" />
-            </div>
-            <div className="absolute -top-2 -right-2 w-6 h-6 bg-gradient-to-r from-pink-500 to-red-500 rounded-full animate-pulse"></div>
+          <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-6">
+            <Loader2 className="w-8 h-8 text-white animate-spin" />
           </div>
-          <h2 className="text-2xl font-bold gradient-text mb-2">Gemini AI Clone</h2>
-          <p className="text-gray-600 dark:text-gray-400">Loading your AI experience...</p>
+          <h2 className="text-2xl font-bold gradient-text mb-2">Redirecting...</h2>
+          <p className="text-gray-600 dark:text-gray-400">Taking you to your dashboard</p>
         </div>
       </div>
     );
   }
 
-  // Show loading while redirecting
   return (
-    <div className={`min-h-screen transition-all duration-500 ease-out ${
+    <div className={`min-h-screen transition-all duration-500 ${
       isDarkMode 
-        ? 'dark bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900' 
+        ? 'bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900' 
         : 'bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50'
     }`}>
-      {/* Header with Enhanced Design */}
+      {/* Header with Dark/Light Mode Toggle */}
       <header className="backdrop-blur-md bg-white/80 dark:bg-gray-800/80 shadow-lg border-b border-gray-200/50 dark:border-gray-700/50 sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
@@ -69,11 +50,9 @@ export default function Home() {
                 <h1 className="text-xl font-bold gradient-text">
                   Gemini AI Clone
                 </h1>
-                {!process.env.NEXT_PUBLIC_GEMINI_API_KEY && (
-                  <span className="ml-2 text-xs text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-900/20 px-3 py-1 rounded-full border border-amber-200 dark:border-amber-800 animate-pulse">
-                    Demo Mode
-                  </span>
-                )}
+                <span className="text-xs text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-900/20 px-3 py-1 rounded-full border border-amber-200 dark:border-amber-800">
+                  Authentication
+                </span>
               </div>
             </div>
             
@@ -92,18 +71,10 @@ export default function Home() {
         </div>
       </header>
 
-      {/* Main Content - Redirecting */}
+      {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="flex justify-center items-center min-h-[calc(100vh-8rem)]">
-          <div className="text-center fade-in">
-            <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-6">
-              <Loader2 className="w-8 h-8 text-white animate-spin" />
-            </div>
-            <h2 className="text-2xl font-bold gradient-text mb-2">Redirecting...</h2>
-            <p className="text-gray-600 dark:text-gray-400">
-              {isAuthenticated ? 'Taking you to your dashboard' : 'Taking you to login'}
-            </p>
-          </div>
+          <AuthContainer />
         </div>
       </main>
 
