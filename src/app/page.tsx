@@ -69,7 +69,7 @@ export default function Home() {
                 <h1 className="text-xl font-bold gradient-text">
                   Gemini AI Clone
                 </h1>
-                {!process.env.NEXT_PUBLIC_GEMINI_API_KEY && (
+                {typeof window !== 'undefined' && !process.env.NEXT_PUBLIC_GEMINI_API_KEY && (
                   <span className="ml-2 text-xs text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-900/20 px-3 py-1 rounded-full border border-amber-200 dark:border-amber-800 animate-pulse">
                     Demo Mode
                   </span>
