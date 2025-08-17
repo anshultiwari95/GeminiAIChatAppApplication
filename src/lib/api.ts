@@ -2,6 +2,9 @@ import { Country } from '@/types';
 
 // Fetch countries from multiple API endpoints with fallback
 export const fetchCountries = async (): Promise<Country[]> => {
+  // Always return fallback countries first to ensure app works
+  const fallbackCountries = getFallbackCountries();
+  
   const apiEndpoints = [
     'https://restcountries.com/v3.1/all?fields=name,cca2,cca3,flags,idd',
     'https://restcountries.com/v3.1/independent?fields=name,cca2,cca3,flags,idd',
@@ -16,6 +19,8 @@ export const fetchCountries = async (): Promise<Country[]> => {
         headers: {
           'Accept': 'application/json',
         },
+        // Add timeout to prevent hanging
+        signal: AbortSignal.timeout(5000),
       });
 
       if (response.ok) {
@@ -42,12 +47,19 @@ export const fetchCountries = async (): Promise<Country[]> => {
     }
   }
 
+  // Always return at least fallback countries
   if (countries.length === 0) {
     console.warn('All API endpoints failed, using fallback countries');
-    return getFallbackCountries();
+    return fallbackCountries;
   }
 
-  return countries;
+  // Merge with fallback countries to ensure we have a good selection
+  const mergedCountries = [...countries, ...fallbackCountries];
+  const uniqueCountries = mergedCountries.filter((country, index, self) => 
+    index === self.findIndex(c => c.cca2 === country.cca2)
+  );
+
+  return uniqueCountries;
 };
 
 // Fallback countries list

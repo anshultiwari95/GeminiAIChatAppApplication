@@ -38,14 +38,10 @@ export const generateGeminiResponse = async (message: string): Promise<GeminiRes
       };
     }
 
-    console.log('Attempting to generate Gemini response with API key:', apiKey.substring(0, 10) + '...');
-
     // Generate content using Gemini
     const result = await model.generateContent(message);
     const response = await result.response;
     const content = response.text();
-
-    console.log('Gemini response generated successfully');
 
     return {
       success: true,
@@ -120,10 +116,6 @@ export const generateGeminiResponseWithContext = async (
       };
     }
 
-    console.log('Attempting to generate Gemini context response with API key:', apiKey.substring(0, 10) + '...');
-    console.log('Chat history length:', chatHistory.length);
-    console.log('Current message:', message);
-
     // Validate chat history format
     if (chatHistory.length > 0 && chatHistory[0].role !== 'user') {
       console.warn('Invalid chat history: first message must be from user, got:', chatHistory[0].role);
@@ -149,8 +141,6 @@ export const generateGeminiResponseWithContext = async (
     const result = await conversation.sendMessage(message);
     const response = await result.response;
     const content = response.text();
-
-    console.log('Gemini context response generated successfully');
 
     return {
       success: true,

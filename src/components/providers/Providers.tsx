@@ -1,8 +1,30 @@
 'use client';
 
 import { Toaster } from 'react-hot-toast';
+import { useEffect } from 'react';
 
 export function Providers({ children }: { children: React.ReactNode }) {
+  // Global error handler
+  useEffect(() => {
+    const handleError = (error: ErrorEvent) => {
+      console.error('Global error caught:', error);
+      // You can send this to an error reporting service
+    };
+
+    const handleUnhandledRejection = (event: PromiseRejectionEvent) => {
+      console.error('Unhandled promise rejection:', event.reason);
+      // You can send this to an error reporting service
+    };
+
+    window.addEventListener('error', handleError);
+    window.addEventListener('unhandledrejection', handleUnhandledRejection);
+
+    return () => {
+      window.removeEventListener('error', handleError);
+      window.removeEventListener('unhandledrejection', handleUnhandledRejection);
+    };
+  }, []);
+
   return (
     <>
       {children}
