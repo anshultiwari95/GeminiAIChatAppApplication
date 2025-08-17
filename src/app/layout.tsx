@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
 import { Providers } from '@/components/providers/Providers';
@@ -10,7 +10,11 @@ export const metadata: Metadata = {
   description: 'A fully functional, responsive, and visually appealing frontend for a Gemini-style conversational AI chat application.',
   keywords: 'AI, Chat, Gemini, Next.js, React, Conversational AI',
   authors: [{ name: 'Gemini AI Clone Team' }],
-  viewport: 'width=device-width, initial-scale=1',
+};
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
 };
 
 export default function RootLayout({

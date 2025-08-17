@@ -196,24 +196,27 @@ const useStore = create<Store>()(
         currentChatRoom: state.currentChatRoom,
         isDarkMode: state.isDarkMode,
       }),
-      // Custom serialize/deserialize to handle Date objects
-      serialize: (state) => {
-        const serialized = JSON.stringify(state, (key, value) => {
-          if (value instanceof Date) {
-            return { __type: 'Date', value: value.toISOString() };
-          }
-          return value;
-        });
-        return serialized;
-      },
-      deserialize: (str) => {
-        const parsed = JSON.parse(str, (key, value) => {
-          if (value && typeof value === 'object' && value.__type === 'Date') {
-            return new Date(value.value);
-          }
-          return value;
-        });
-        return parsed;
+      storage: {
+        getItem: (name) => {
+          const str = localStorage.getItem(name);
+          if (!str) return null;
+          return JSON.parse(str, (key, value) => {
+            if (value && typeof value === 'object' && value.__type === 'Date') {
+              return new Date(value.value);
+            }
+            return value;
+          });
+        },
+        setItem: (name, value) => {
+          const serialized = JSON.stringify(value, (key, value) => {
+            if (value instanceof Date) {
+              return { __type: 'Date', value: value.toISOString() };
+            }
+            return value;
+          });
+          localStorage.setItem(name, serialized);
+        },
+        removeItem: (name) => localStorage.removeItem(name),
       },
     }
   )
