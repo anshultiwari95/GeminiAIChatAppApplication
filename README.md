@@ -6,7 +6,7 @@ Built for **Kuvaka Tech Frontend Developer Role** - This project demonstrates ad
 
 ## ✨ Live Demo
 
-**🌐 Deployed on Vercel:** [Your Live URL Here]
+**🌐 Deployed on Vercel:** https://gemini-ai-chat-app-application.vercel.app/auth
 
 ## 🎯 Project Overview
 
