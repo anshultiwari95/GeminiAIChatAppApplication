@@ -328,38 +328,10 @@ This project is created for **Kuvaka Tech Frontend Developer Role Assignment**.
 
 ## 👨‍💻 Author
 
-**Your Name** - Frontend Developer
-- **GitHub**: [@yourusername](https://github.com/yourusername)
-- **Portfolio**: [your-portfolio.com](https://your-portfolio.com)
-- **LinkedIn**: [Your LinkedIn](https://linkedin.com/in/yourprofile)
+**Anshul Tiwari** - Frontend Developer
+- **GitHub**: [@anshultiwari95](https://github.com/anshultiwari95)
+- **Portfolio**: [anshul-tiwari-dev.vercel.app](https://anshul-tiwari-dev.vercel.app/)
+- **LinkedIn**: [Anshul Tiwari](https://www.linkedin.com/in/tiwari-anshul12/)
 
-## 🏆 Assignment Submission
-
-**Email**: hr@kuvaka.io  
-**Subject**: "Gemini Frontend Clone Assignment Submission - Kuvaka Tech [Your Full Name]"
-
-**Include in your email:**
-- ✅ GitHub Repository Link
-- ✅ Live Deployment Link (Vercel/Netlify)
-- ✅ Any additional notes or credentials
-
----
-
-## 🎯 Evaluation Criteria Met
-
-| Criteria | Status | Notes |
-|----------|--------|-------|
-| **Functional Completion** | ✅ 100% | All requirements implemented |
-| **UI/UX Quality** | ✅ 100% | Professional, modern design |
-| **Code Readability** | ✅ 100% | Clean, well-organized code |
-| **Form Validation** | ✅ 100% | React Hook Form + Zod |
-| **State Management** | ✅ 100% | Zustand with persistence |
-| **Chat Behaviors** | ✅ 100% | Complete feature set |
-| **Responsiveness** | ✅ 100% | Mobile-first design |
-| **Accessibility** | ✅ 100% | Keyboard navigation, ARIA |
-| **Deployment** | ✅ 100% | Vercel ready |
-| **Documentation** | ✅ 100% | Comprehensive README |
-
----
 
 **🌟 This project demonstrates advanced frontend development skills and is ready for professional review!**
